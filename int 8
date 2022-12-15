@@ -1,0 +1,7 @@
+@bot.command()
+async def base_command(ctx: interactions.CommandContext):
+    pass
+    
+    @base_command.subcommand()
+async def subcommand(ctx: interactions.CommandContext, base_res: interactions.BaseResult):
+    pass
