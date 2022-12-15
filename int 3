@@ -1,0 +1,13 @@
+import interactions
+
+bot = interactions.Client(
+    token="your_secret_bot_token",
+    default_scope=the_id_of_your_guild,
+)
+
+@bot.command()
+async def my_first_command(ctx: interactions.CommandContext):
+    """This is the first command I made!"""
+    await ctx.send("Hi there!")
+
+bot.start()
