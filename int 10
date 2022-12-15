@@ -1,0 +1,174 @@
+@bot.command()
+async def foo(ctx):
+    ... # do something
+    return StopCommand  # does not execute `bar`
+
+@foo.subcommand()
+async def bar(ctx):
+    ...  # `bar` is not executed
+    
+    @bot.command()
+async def foo(ctx: interactions.CommandContext):
+    ... # do something
+    raise Exception("Something went wrong")
+    # Most likely, you won't be the one
+    # raising the error, it may just be
+    # a bug or mistake with your code.
+
+@foo.error
+async def foo_error(ctx: interactions.CommandContext, error: Exception):
+    ... # do something
+    
+    @bot.command(
+    type=interactions.ApplicationCommandType.USER,
+    name="User Command",
+    scope=1234567890
+)
+async def test(ctx):
+    await ctx.send(f"You have applied a command onto user {ctx.target.user.username}!")
+    
+    button = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="hello world!",
+    custom_id="hello"
+)
+
+@bot.command(
+    name="button_test",
+    description="This is the first command I made!",
+    scope=the_id_of_your_guild,
+)
+async def button_test(ctx):
+    await ctx.send("testing", components=button)
+
+@bot.component("hello")
+async def button_response(ctx):
+    await ctx.send("You clicked the Button :O", ephemeral=True)
+
+bot.start()
+
+button = interactions.Button(
+    style=interactions.ButtonStyle.PRIMARY,
+    label="hello world!",
+    custom_id="hello",
+)
+
+button2 = interactions.Button(
+    style=interactions.ButtonStyle.DANGER,
+    label="bye bye!",
+    custom_id="bye!",
+)
+
+
+row = interactions.ActionRow(
+    components=[button1, button2]
+)
+# or:
+row = interactions.ActionRow.new(button1, button2)
+# or:
+row = interactions.spread_to_rows(button1, button2)
+# spread_to_rows returns a list of rows
+
+@bot.command(...)
+async def test(ctx):
+    await ctx.send("rows!", components=row)
+    
+    interactions.TextInput(
+    style=interactions.TextStyleType.SHORT,
+    label="Let's get straight to it: what's 1 + 1?",
+    custom_id="text_input_response",
+    min_length=1,
+    max_length=3,
+)
+async def my_cool_modal_command(ctx):
+    modal = interactions.Modal(
+        title="Application Form",
+        custom_id="mod_app_form",
+        components=[interactions.TextInput(...)],
+    )
+
+    await ctx.popup(modal)
+    @bot.modal("mod_app_form")
+async def modal_response(ctx, response: str):
+    await ctx.send(f"You wrote: {response}", ephemeral=True)
+    @bot.command(
+    name="sudo",
+    description="Fake a command as if its done by someone else.",
+    default_member_permissions=interactions.Permissions.ADMINISTRATOR,  # admin-only
+    options=[interactions.Option(
+                    name="response",
+                    description="What command you want to execute",
+                    type=interactions.OptionType.STRING,
+                    required=True,
+                )]
+)
+async def sudo(ctx, response: str):
+    await ctx.send(f"You wrote: {response}", ephemeral=True)
+
+# This is the same command however, the below example covers more than 1 permission.
+
+@bot.command(
+    name="sudo",
+    description="Fake a command as if its done by someone else.",
+    default_member_permissions=interactions.Permissions.ADMINISTRATOR | interactions.Permissions.MOVE_MEMBERS,
+    options=[interactions.Option(
+                    name="response",
+                    description="What command you want to execute",
+                    type=interactions.OptionType.STRING,
+                    required=True,
+                )]
+)
+async def sudo(ctx, response: str):
+    await ctx.send(f"You wrote: {response}", ephemeral=True)
+
+# Just a disclaimer, these examples are not meant to be used line by line because
+# you can't have more than 1 global command with the same name
+@bot.command(
+    name="sudo",
+    description="Fake a command as if its done by someone else.",
+    dm_permission=False,  # Guild-only
+    options=[interactions.Option(
+                    name="response",
+                    description="What command you want to execute",
+                    type=interactions.OptionType.STRING,
+                    required=True,
+                )]
+)
+async def sudo(ctx, response: str):
+    await ctx.send(f"You wrote: {response}", ephemeral=True)
+    from interactions import ActionRow, Button
+
+@bot.command()
+async def command(ctx):
+    b1 = Button(style=1, custom_id="b1", label="b1")
+    b2 = Button(style=1, custom_id="b2", label="b2")
+    b3 = Button(style=1, custom_id="b3", label="b3")
+    b4 = Button(style=1, custom_id="b4", label="b4")
+
+    await ctx.send("Components:", components=ActionRow.new(b1, b2, b3, b4))
+    # instead of the cumbersome ActionRow(components=[b1, b2, b3, b4])
+    from interactions import Button, SelectMenu, SelectOption, spread_to_rows
+
+@bot.command()
+async def command(ctx):
+    b1 = Button(style=1, custom_id="b1", label="b1")
+    b2 = Button(style=1, custom_id="b2", label="b2")
+    s1 = SelectMenu(
+        custom_id="s1",
+        options=[
+            SelectOption(label="1", value="1"),
+            SelectOption(label="2", value="2"),
+        ],
+    )
+    b3 = Button(style=1, custom_id="b3", label="b3")
+    b4 = Button(style=1, custom_id="b4", label="b4")
+
+    await ctx.send("Components:", components=spread_to_rows(b1, b2, s1, b3, b4))
+    from interactions import autodefer
+import asyncio
+
+@bot.command()
+@autodefer()  # configurable
+async def command(ctx):
+    await asyncio.sleep(5)
+    await ctx.send("I'm awake now!")
