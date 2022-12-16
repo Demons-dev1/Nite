@@ -1,0 +1,204 @@
+@client.event
+async def on_message(message):
+    if message.content.startswith('$greet'):
+        channel = message.channel
+        await channel.send('Say hello!')
+
+        def check(m):
+            return m.content == 'hello' and m.channel == channel
+
+        msg = await client.wait_for('message', check=check)
+        await channel.send(f'Hello {msg.author}!')
+@client.event
+async def on_message(message):
+    if message.content.startswith('$thumb'):
+        channel = message.channel
+        await channel.send('Send me that 👍 reaction, mate')
+
+        def check(reaction, user):
+            return user == message.author and str(reaction.emoji) == '👍'
+
+        try:
+            reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+        except asyncio.TimeoutError:
+            await channel.send('👎')
+        else:
+            await channel.send('👍')
+@bot.application_command_check()
+def check_app_commands(inter):
+    return inter.channel_id in whitelisted_channels
+
+@client.event
+async def on_ready():
+    print('Ready!')
+@bot.listen()
+async def on_message(message):
+    print('one')
+
+# in some other file...
+
+@bot.listen('on_message')
+async def my_message(message):
+    print('two')
+async def on_ready(): pass
+async def my_message(message): pass
+
+bot.add_listener(on_ready)
+bot.add_listener(my_message, 'on_message')
+game = disnake.Game("with the API")
+await client.change_presence(status=disnake.Status.idle, activity=game)
+
+async for guild in client.fetch_guilds(limit=150):
+    print(guild.name)
+    
+guilds = await client.fetch_guilds(limit=150).flatten()
+# guilds is now a list of Guild...
+for guild in client.guilds:
+    for channel in guild.channels:
+        yield channel
+for guild in client.guilds:
+    for member in guild.members:
+        yield member
+        
+try:
+    loop.run_until_complete(start(*args, **kwargs))
+except KeyboardInterrupt:
+    loop.run_until_complete(close())
+    # cancel all tasks lingering
+finally:
+    loop.close()
+
+@client.event
+async def on_message(message):
+    if message.content.startswith('$greet'):
+        channel = message.channel
+        await channel.send('Say hello!')
+
+        def check(m):
+            return m.content == 'hello' and m.channel == channel
+
+        msg = await client.wait_for('message', check=check)
+        await channel.send(f'Hello {msg.author}!')
+
+@client.event
+async def on_message(message):
+    if message.content.startswith('$thumb'):
+        channel = message.channel
+        await channel.send('Send me that 👍 reaction, mate')
+
+        def check(reaction, user):
+            return user == message.author and str(reaction.emoji) == '👍'
+        try:
+            reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+        except asyncio.TimeoutError:
+            await channel.send('👎')
+        else:
+            await channel.send('👍')
+            
+async def get_prefix(bot, message):
+    extras = await prefixes_for(message.guild) # returns a list
+    return commands.when_mentioned_or(*extras)(bot, message)
+import abc
+
+class CogABCMeta(commands.CogMeta, abc.ABCMeta):
+    pass
+
+class SomeMixin(metaclass=abc.ABCMeta):
+    pass
+
+class SomeCogMixin(SomeMixin, commands.Cog, metaclass=CogABCMeta):
+    pass
+class MyCog(commands.Cog, command_attrs=dict(hidden=True)):
+    @commands.command()
+    async def foo(self, ctx):
+        pass # hidden -> True
+
+    @commands.command(hidden=False)
+    async def bar(self, ctx):
+        pass # hidden -> False
+Use `{prefix}{command_name} [command]` for more info on a command.
+You can also use `{prefix}{command_name} [category]` for more info on a category.
+def owner_or_permissions(**perms):
+    original = commands.has_permissions(**perms).predicate
+    async def extended_check(ctx):
+        if ctx.guild is None:
+            return False
+        return ctx.guild.owner_id == ctx.author.id or await original(ctx)
+    return commands.check(extended_check)
+def check_if_it_is_me(ctx):
+    return ctx.message.author.id == 85309593344815104
+
+@bot.command()
+@commands.check(check_if_it_is_me)
+async def only_for_me(ctx):
+    await ctx.send('I know you!')
+def is_me():
+    def predicate(ctx):
+        return ctx.message.author.id == 85309593344815104
+    return commands.check(predicate)
+
+@bot.command()
+@is_me()
+async def only_me(ctx):
+    await ctx.send('Only you!')
+def is_guild_owner():
+    def predicate(ctx):
+        return ctx.guild is not None and ctx.guild.owner_id == ctx.author.id
+    return commands.check(predicate)
+
+@bot.command()
+@commands.check_any(commands.is_owner(), is_guild_owner())
+async def only_for_owners(ctx):
+    await ctx.send('Hello mister owner!')
+    
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+async def test(ctx):
+    await ctx.send('You can manage messages.')
+
+@bot.command()
+@commands.has_any_role('Library Devs', 'Moderators', 492212595072434186)
+async def cool(ctx):
+    await ctx.send('You are cool indeed')
+async def record_usage(ctx):
+    print(ctx.author, 'used', ctx.command, 'at', ctx.message.created_at)
+
+@bot.command()
+@commands.before_invoke(record_usage)
+async def who(ctx): # Output: <User> used who at <Time>
+    await ctx.send('i am a bot')
+
+class What(commands.Cog):
+
+    @commands.before_invoke(record_usage)
+    @commands.command()
+    async def when(self, ctx): # Output: <User> used when at <Time>
+        await ctx.send(f'and i have existed since {ctx.bot.user.created_at}')
+
+    @commands.command()
+    async def where(self, ctx): # Output: <Nothing>
+        await ctx.send('on Discord')
+
+    @commands.command()
+    async def why(self, ctx): # Output: <Nothing>
+        await ctx.send('because someone made me')
+
+bot.add_cog(What())
+@bot.slash_command()
+@commands.default_member_permissions(manage_messages=True, view_audit_log=True)
+async def purge(inter, num: int):
+    ...
+counter = 0
+async for message in channel.history(limit=200):
+    if message.author == client.user:
+        counter += 1
+messages = await channel.history(limit=123).flatten()
+# messages is now a list of Message...
+async with channel.typing():
+    # simulate something heavy
+    await asyncio.sleep(10)
+
+await channel.send('done!')
+@commands.command()
+async def test(ctx, numbers: Greedy[int], reason: str):
+    await ctx.send("numbers: {0}, reason: {1}".format(numbers, reason))
