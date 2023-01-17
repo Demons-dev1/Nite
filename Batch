@@ -1,0 +1,2818 @@
+static void UpdatePresence()
+{
+    DiscordRichPresence discordPresence;
+    memset(&discordPresence, 0, sizeof(discordPresence));
+    discordPresence.state = "Playing Solo";
+    discordPresence.details = "Competitive";
+    discordPresence.startTimestamp = 1507665886;
+    discordPresence.endTimestamp = 99999999999;
+    discordPresence.largeImageText = "Numbani";
+    discordPresence.smallImageText = "Rogue - Level 100";
+    discordPresence.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
+    discordPresence.partySize = 1;
+    discordPresence.partyMax = 5;
+    discordPresence.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM= ";
+    Discord_UpdatePresence(&discordPresence);
+}
+
+ static void UpdatePresence()
+{
+    DiscordRichPresence discordPresence;
+    memset(&discordPresence, 0, sizeof(discordPresence));
+    discordPresence.state = "Playing Solo";
+    discordPresence.details = "Competitive";
+    discordPresence.startTimestamp = 1507665886;
+    discordPresence.endTimestamp = 99999999999;
+    discordPresence.largeImageText = "Numbani";
+    discordPresence.smallImageText = "Rogue - Level 100";
+    discordPresence.partyId = "ae488379-351d-4a4f-ad32-2b9b01c91657";
+    discordPresence.partySize = 1;
+    discordPresence.partyMax = 5;
+    discordPresence.joinSecret = "MTI4NzM0OjFpMmhuZToxMjMxMjM= ";
+    Discord_UpdatePresence(&discordPresence);
+}
+https://discord.com/channels/@me/1055213664497586236/1064212830288621569
+ using System;
+using System.Runtime.InteropServices;
+using System.Text;
+
+namespace Discord
+{
+    public enum Result
+    {
+        Ok = 0,
+        ServiceUnavailable = 1,
+        InvalidVersion = 2,
+        LockFailed = 3,
+        InternalError = 4,
+        InvalidPayload = 5,
+        InvalidCommand = 6,
+        InvalidPermissions = 7,
+        NotFetched = 8,
+        NotFound = 9,
+        Conflict = 10,
+        InvalidSecret = 11,
+        InvalidJoinSecret = 12,
+        NoEligibleActivity = 13,
+        InvalidInvite = 14,
+        NotAuthenticated = 15,
+        InvalidAccessToken = 16,
+        ApplicationMismatch = 17,
+        InvalidDataUrl = 18,
+        InvalidBase64 = 19,
+        NotFiltered = 20,
+        LobbyFull = 21,
+        InvalidLobbySecret = 22,
+        InvalidFilename = 23,
+        InvalidFileSize = 24,
+        InvalidEntitlement = 25,
+        NotInstalled = 26,
+        NotRunning = 27,
+        InsufficientBuffer = 28,
+        PurchaseCanceled = 29,
+        InvalidGuild = 30,
+        InvalidEvent = 31,
+        InvalidChannel = 32,
+        InvalidOrigin = 33,
+        RateLimited = 34,
+        OAuth2Error = 35,
+        SelectChannelTimeout = 36,
+        GetGuildTimeout = 37,
+        SelectVoiceForceRequired = 38,
+        CaptureShortcutAlreadyListening = 39,
+        UnauthorizedForAchievement = 40,
+        InvalidGiftCode = 41,
+        PurchaseError = 42,
+        TransactionAborted = 43,
+    }
+
+    public enum CreateFlags
+    {
+        Default = 0,
+        NoRequireDiscord = 1,
+    }
+
+    public enum LogLevel
+    {
+        Error = 1,
+        Warn,
+        Info,
+        Debug,
+    }
+
+    public enum UserFlag
+    {
+        Partner = 2,
+        HypeSquadEvents = 4,
+        HypeSquadHouse1 = 64,
+        HypeSquadHouse2 = 128,
+        HypeSquadHouse3 = 256,
+    }
+
+    public enum PremiumType
+    {
+        None = 0,
+        Tier1 = 1,
+        Tier2 = 2,
+    }
+
+    public enum ImageType
+    {
+        User,
+    }
+
+    public enum ActivityType
+    {
+        Playing,
+        Streaming,
+        Listening,
+        Watching,
+    }
+
+    public enum ActivityActionType
+    {
+        Join = 1,
+        Spectate,
+    }
+
+    public enum ActivityJoinRequestReply
+    {
+        No,
+        Yes,
+        Ignore,
+    }
+
+    public enum Status
+    {
+        Offline = 0,
+        Online = 1,
+        Idle = 2,
+        DoNotDisturb = 3,
+    }
+
+    public enum RelationshipType
+    {
+        None,
+        Friend,
+        Blocked,
+        PendingIncoming,
+        PendingOutgoing,
+        Implicit,
+    }
+
+    public enum LobbyType
+    {
+        Private = 1,
+        Public,
+    }
+
+    public enum LobbySearchComparison
+    {
+        LessThanOrEqual = -2,
+        LessThan,
+        Equal,
+        GreaterThan,
+        GreaterThanOrEqual,
+        NotEqual,
+    }
+
+    public enum LobbySearchCast
+    {
+        String = 1,
+        Number,
+    }
+
+    public enum LobbySearchDistance
+    {
+        Local,
+        Default,
+        Extended,
+        Global,
+    }
+
+    public enum EntitlementType
+    {
+        Purchase = 1,
+        PremiumSubscription,
+        DeveloperGift,
+        TestModePurchase,
+        FreePurchase,
+        UserGift,
+        PremiumPurchase,
+    }
+
+    public enum SkuType
+    {
+        Application = 1,
+        DLC,
+        Consumable,
+        Bundle,
+    }
+
+    public enum InputModeType
+    {
+        VoiceActivity = 0,
+        PushToTalk,
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct User
+    {
+        public Int64 Id;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public string Username;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
+        public string Discriminator;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string Avatar;
+
+        public bool Bot;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct OAuth2Token
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string AccessToken;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1024)]
+        public string Scopes;
+
+        public Int64 Expires;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct ImageHandle
+    {
+        public ImageType Type;
+
+        public Int64 Id;
+
+        public UInt32 Size;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct ImageDimensions
+    {
+        public UInt32 Width;
+
+        public UInt32 Height;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct ActivityTimestamps
+    {
+        public Int64 Start;
+
+        public Int64 End;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct ActivityAssets
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string LargeImage;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string LargeText;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string SmallImage;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string SmallText;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct PartySize
+    {
+        public Int32 CurrentSize;
+
+        public Int32 MaxSize;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct ActivityParty
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string Id;
+
+        public PartySize Size;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct ActivitySecrets
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string Match;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string Join;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string Spectate;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct Activity
+    {
+        public ActivityType Type;
+
+        public Int64 ApplicationId;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string Name;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string State;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string Details;
+
+        public ActivityTimestamps Timestamps;
+
+        public ActivityAssets Assets;
+
+        public ActivityParty Party;
+
+        public ActivitySecrets Secrets;
+
+        public bool Instance;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct Presence
+    {
+        public Status Status;
+
+        public Activity Activity;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct Relationship
+    {
+        public RelationshipType Type;
+
+        public User User;
+
+        public Presence Presence;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct Lobby
+    {
+        public Int64 Id;
+
+        public LobbyType Type;
+
+        public Int64 OwnerId;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+        public string Secret;
+
+        public UInt32 Capacity;
+
+        public bool Locked;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct FileStat
+    {
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+        public string Filename;
+
+        public UInt64 Size;
+
+        public UInt64 LastModified;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct Entitlement
+    {
+        public Int64 Id;
+
+        public EntitlementType Type;
+
+        public Int64 SkuId;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct SkuPrice
+    {
+        public UInt32 Amount;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+        public string Currency;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct Sku
+    {
+        public Int64 Id;
+
+        public SkuType Type;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public string Name;
+
+        public SkuPrice Price;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct InputMode
+    {
+        public InputModeType Type;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public string Shortcut;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct UserAchievement
+    {
+        public Int64 UserId;
+
+        public Int64 AchievementId;
+
+        public byte PercentComplete;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+        public string UnlockedAt;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct LobbyTransaction
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SetTypeMethod(IntPtr methodsPtr, LobbyType type);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SetOwnerMethod(IntPtr methodsPtr, Int64 ownerId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SetCapacityMethod(IntPtr methodsPtr, UInt32 capacity);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SetMetadataMethod(IntPtr methodsPtr, [MarshalAs(UnmanagedType.LPStr)]string key, [MarshalAs(UnmanagedType.LPStr)]string value);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result DeleteMetadataMethod(IntPtr methodsPtr, [MarshalAs(UnmanagedType.LPStr)]string key);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SetLockedMethod(IntPtr methodsPtr, bool locked);
+
+            internal SetTypeMethod SetType;
+
+            internal SetOwnerMethod SetOwner;
+
+            internal SetCapacityMethod SetCapacity;
+
+            internal SetMetadataMethod SetMetadata;
+
+            internal DeleteMetadataMethod DeleteMetadata;
+
+            internal SetLockedMethod SetLocked;
+        }
+
+        internal IntPtr MethodsPtr;
+
+        internal Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        public void SetType(LobbyType type)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.SetType(MethodsPtr, type);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void SetOwner(Int64 ownerId)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.SetOwner(MethodsPtr, ownerId);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void SetCapacity(UInt32 capacity)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.SetCapacity(MethodsPtr, capacity);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void SetMetadata(string key, string value)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.SetMetadata(MethodsPtr, key, value);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void DeleteMetadata(string key)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.DeleteMetadata(MethodsPtr, key);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void SetLocked(bool locked)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.SetLocked(MethodsPtr, locked);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct LobbyMemberTransaction
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SetMetadataMethod(IntPtr methodsPtr, [MarshalAs(UnmanagedType.LPStr)]string key, [MarshalAs(UnmanagedType.LPStr)]string value);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result DeleteMetadataMethod(IntPtr methodsPtr, [MarshalAs(UnmanagedType.LPStr)]string key);
+
+            internal SetMetadataMethod SetMetadata;
+
+            internal DeleteMetadataMethod DeleteMetadata;
+        }
+
+        internal IntPtr MethodsPtr;
+
+        internal Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        public void SetMetadata(string key, string value)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.SetMetadata(MethodsPtr, key, value);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void DeleteMetadata(string key)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.DeleteMetadata(MethodsPtr, key);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public partial struct LobbySearchQuery
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result FilterMethod(IntPtr methodsPtr, [MarshalAs(UnmanagedType.LPStr)]string key, LobbySearchComparison comparison, LobbySearchCast cast, [MarshalAs(UnmanagedType.LPStr)]string value);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SortMethod(IntPtr methodsPtr, [MarshalAs(UnmanagedType.LPStr)]string key, LobbySearchCast cast, [MarshalAs(UnmanagedType.LPStr)]string value);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result LimitMethod(IntPtr methodsPtr, UInt32 limit);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result DistanceMethod(IntPtr methodsPtr, LobbySearchDistance distance);
+
+            internal FilterMethod Filter;
+
+            internal SortMethod Sort;
+
+            internal LimitMethod Limit;
+
+            internal DistanceMethod Distance;
+        }
+
+        internal IntPtr MethodsPtr;
+
+        internal Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        public void Filter(string key, LobbySearchComparison comparison, LobbySearchCast cast, string value)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.Filter(MethodsPtr, key, comparison, cast, value);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void Sort(string key, LobbySearchCast cast, string value)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.Sort(MethodsPtr, key, cast, value);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void Limit(UInt32 limit)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.Limit(MethodsPtr, limit);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+
+        public void Distance(LobbySearchDistance distance)
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                var res = Methods.Distance(MethodsPtr, distance);
+                if (res != Result.Ok)
+                {
+                    throw new ResultException(res);
+                }
+            }
+        }
+    }
+
+    public partial class ResultException : Exception
+    {
+        public readonly Result Result;
+
+        public ResultException(Result result) : base(result.ToString())
+        {
+        }
+    }
+
+    internal partial class Utility
+    {
+        internal static IntPtr Retain<T>(T value)
+        {
+            return GCHandle.ToIntPtr(GCHandle.Alloc(value, GCHandleType.Normal));
+        }
+
+        internal static void Release(IntPtr ptr)
+        {
+            GCHandle handle = GCHandle.FromIntPtr(ptr);
+            handle.Free();
+        }
+    }
+
+    public partial class Discord : IDisposable
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIEvents
+        {
+
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void DestroyHandler(IntPtr MethodsPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result RunCallbacksMethod(IntPtr methodsPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SetLogHookCallback(IntPtr ptr, LogLevel level, [MarshalAs(UnmanagedType.LPStr)]string message);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SetLogHookMethod(IntPtr methodsPtr, LogLevel minLevel, IntPtr callbackData, SetLogHookCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetApplicationManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetUserManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetImageManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetActivityManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetRelationshipManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetLobbyManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetNetworkManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetOverlayManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetStorageManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetStoreManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetVoiceManagerMethod(IntPtr discordPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate IntPtr GetAchievementManagerMethod(IntPtr discordPtr);
+
+            internal DestroyHandler Destroy;
+
+            internal RunCallbacksMethod RunCallbacks;
+
+            internal SetLogHookMethod SetLogHook;
+
+            internal GetApplicationManagerMethod GetApplicationManager;
+
+            internal GetUserManagerMethod GetUserManager;
+
+            internal GetImageManagerMethod GetImageManager;
+
+            internal GetActivityManagerMethod GetActivityManager;
+
+            internal GetRelationshipManagerMethod GetRelationshipManager;
+
+            internal GetLobbyManagerMethod GetLobbyManager;
+
+            internal GetNetworkManagerMethod GetNetworkManager;
+
+            internal GetOverlayManagerMethod GetOverlayManager;
+
+            internal GetStorageManagerMethod GetStorageManager;
+
+            internal GetStoreManagerMethod GetStoreManager;
+
+            internal GetVoiceManagerMethod GetVoiceManager;
+
+            internal GetAchievementManagerMethod GetAchievementManager;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFICreateParams
+        {
+            internal Int64 ClientId;
+
+            internal UInt64 Flags;
+
+            internal IntPtr Events;
+
+            internal IntPtr EventData;
+
+            internal IntPtr ApplicationEvents;
+
+            internal UInt32 ApplicationVersion;
+
+            internal IntPtr UserEvents;
+
+            internal UInt32 UserVersion;
+
+            internal IntPtr ImageEvents;
+
+            internal UInt32 ImageVersion;
+
+            internal IntPtr ActivityEvents;
+
+            internal UInt32 ActivityVersion;
+
+            internal IntPtr RelationshipEvents;
+
+            internal UInt32 RelationshipVersion;
+
+            internal IntPtr LobbyEvents;
+
+            internal UInt32 LobbyVersion;
+
+            internal IntPtr NetworkEvents;
+
+            internal UInt32 NetworkVersion;
+
+            internal IntPtr OverlayEvents;
+
+            internal UInt32 OverlayVersion;
+
+            internal IntPtr StorageEvents;
+
+            internal UInt32 StorageVersion;
+
+            internal IntPtr StoreEvents;
+
+            internal UInt32 StoreVersion;
+
+            internal IntPtr VoiceEvents;
+
+            internal UInt32 VoiceVersion;
+
+            internal IntPtr AchievementEvents;
+
+            internal UInt32 AchievementVersion;
+        }
+
+        [DllImport(Constants.DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        private static extern Result DiscordCreate(UInt32 version, ref FFICreateParams createParams, out IntPtr manager);
+
+        public delegate void SetLogHookHandler(LogLevel level, string message);
+
+        private IntPtr EventsPtr;
+
+        private FFIEvents Events;
+
+        private IntPtr ApplicationEventsPtr;
+
+        private ApplicationManager.FFIEvents ApplicationEvents;
+
+        private ApplicationManager ApplicationManagerInstance;
+
+        private IntPtr UserEventsPtr;
+
+        private UserManager.FFIEvents UserEvents;
+
+        private UserManager UserManagerInstance;
+
+        private IntPtr ImageEventsPtr;
+
+        private ImageManager.FFIEvents ImageEvents;
+
+        private ImageManager ImageManagerInstance;
+
+        private IntPtr ActivityEventsPtr;
+
+        private ActivityManager.FFIEvents ActivityEvents;
+
+        private ActivityManager ActivityManagerInstance;
+
+        private IntPtr RelationshipEventsPtr;
+
+        private RelationshipManager.FFIEvents RelationshipEvents;
+
+        private RelationshipManager RelationshipManagerInstance;
+
+        private IntPtr LobbyEventsPtr;
+
+        private LobbyManager.FFIEvents LobbyEvents;
+
+        private LobbyManager LobbyManagerInstance;
+
+        private IntPtr NetworkEventsPtr;
+
+        private NetworkManager.FFIEvents NetworkEvents;
+
+        private NetworkManager NetworkManagerInstance;
+
+        private IntPtr OverlayEventsPtr;
+
+        private OverlayManager.FFIEvents OverlayEvents;
+
+        private OverlayManager OverlayManagerInstance;
+
+        private IntPtr StorageEventsPtr;
+
+        private StorageManager.FFIEvents StorageEvents;
+
+        private StorageManager StorageManagerInstance;
+
+        private IntPtr StoreEventsPtr;
+
+        private StoreManager.FFIEvents StoreEvents;
+
+        private StoreManager StoreManagerInstance;
+
+        private IntPtr VoiceEventsPtr;
+
+        private VoiceManager.FFIEvents VoiceEvents;
+
+        private VoiceManager VoiceManagerInstance;
+
+        private IntPtr AchievementEventsPtr;
+
+        private AchievementManager.FFIEvents AchievementEvents;
+
+        private AchievementManager AchievementManagerInstance;
+
+        private IntPtr MethodsPtr;
+
+        private Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        private FFIMethods.SetLogHookCallback setLogHook;
+
+        public Discord(Int64 clientId, UInt64 flags)
+        {
+            FFICreateParams createParams;
+            createParams.ClientId = clientId;
+            createParams.Flags = flags;
+            Events = new FFIEvents();
+            EventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(Events));
+            createParams.Events = EventsPtr;
+            createParams.EventData = (IntPtr)(0);
+            ApplicationEvents = new ApplicationManager.FFIEvents();
+            ApplicationEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ApplicationEvents));
+            createParams.ApplicationEvents = ApplicationEventsPtr;
+            createParams.ApplicationVersion = 1;
+            UserEvents = new UserManager.FFIEvents();
+            UserEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(UserEvents));
+            createParams.UserEvents = UserEventsPtr;
+            createParams.UserVersion = 1;
+            ImageEvents = new ImageManager.FFIEvents();
+            ImageEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ImageEvents));
+            createParams.ImageEvents = ImageEventsPtr;
+            createParams.ImageVersion = 1;
+            ActivityEvents = new ActivityManager.FFIEvents();
+            ActivityEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ActivityEvents));
+            createParams.ActivityEvents = ActivityEventsPtr;
+            createParams.ActivityVersion = 1;
+            RelationshipEvents = new RelationshipManager.FFIEvents();
+            RelationshipEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(RelationshipEvents));
+            createParams.RelationshipEvents = RelationshipEventsPtr;
+            createParams.RelationshipVersion = 1;
+            LobbyEvents = new LobbyManager.FFIEvents();
+            LobbyEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(LobbyEvents));
+            createParams.LobbyEvents = LobbyEventsPtr;
+            createParams.LobbyVersion = 1;
+            NetworkEvents = new NetworkManager.FFIEvents();
+            NetworkEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(NetworkEvents));
+            createParams.NetworkEvents = NetworkEventsPtr;
+            createParams.NetworkVersion = 1;
+            OverlayEvents = new OverlayManager.FFIEvents();
+            OverlayEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(OverlayEvents));
+            createParams.OverlayEvents = OverlayEventsPtr;
+            createParams.OverlayVersion = 1;
+            StorageEvents = new StorageManager.FFIEvents();
+            StorageEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(StorageEvents));
+            createParams.StorageEvents = StorageEventsPtr;
+            createParams.StorageVersion = 1;
+            StoreEvents = new StoreManager.FFIEvents();
+            StoreEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(StoreEvents));
+            createParams.StoreEvents = StoreEventsPtr;
+            createParams.StoreVersion = 1;
+            VoiceEvents = new VoiceManager.FFIEvents();
+            VoiceEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(VoiceEvents));
+            createParams.VoiceEvents = VoiceEventsPtr;
+            createParams.VoiceVersion = 1;
+            AchievementEvents = new AchievementManager.FFIEvents();
+            AchievementEventsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(AchievementEvents));
+            createParams.AchievementEvents = AchievementEventsPtr;
+            createParams.AchievementVersion = 1;
+            InitEvents(EventsPtr, ref Events);
+            var result = DiscordCreate(2, ref createParams, out MethodsPtr);
+            if (result != Result.Ok)
+            {
+                Dispose();
+                throw new ResultException(result);
+            }
+        }
+
+        private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
+        {
+            Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        public void Dispose()
+        {
+            if (MethodsPtr != IntPtr.Zero)
+            {
+                Methods.Destroy(MethodsPtr);
+            }
+            Marshal.FreeHGlobal(EventsPtr);
+            Marshal.FreeHGlobal(ApplicationEventsPtr);
+            Marshal.FreeHGlobal(UserEventsPtr);
+            Marshal.FreeHGlobal(ImageEventsPtr);
+            Marshal.FreeHGlobal(ActivityEventsPtr);
+            Marshal.FreeHGlobal(RelationshipEventsPtr);
+            Marshal.FreeHGlobal(LobbyEventsPtr);
+            Marshal.FreeHGlobal(NetworkEventsPtr);
+            Marshal.FreeHGlobal(OverlayEventsPtr);
+            Marshal.FreeHGlobal(StorageEventsPtr);
+            Marshal.FreeHGlobal(StoreEventsPtr);
+            Marshal.FreeHGlobal(VoiceEventsPtr);
+            Marshal.FreeHGlobal(AchievementEventsPtr);
+        }
+
+        public void RunCallbacks()
+        {
+            var res = Methods.RunCallbacks(MethodsPtr);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+
+        public void SetLogHook(LogLevel minLevel, SetLogHookHandler callback)
+        {
+             setLogHook = (IntPtr ptr, LogLevel level, string message) =>
+            {
+                callback(level, message);
+            };
+            Methods.SetLogHook(MethodsPtr, minLevel, IntPtr.Zero, setLogHook);
+        }
+
+        public ApplicationManager GetApplicationManager()
+        {
+            if (ApplicationManagerInstance == null) {
+                ApplicationManagerInstance = new ApplicationManager(
+                  Methods.GetApplicationManager(MethodsPtr),
+                  ApplicationEventsPtr,
+                  ref ApplicationEvents
+                );
+            }
+            return ApplicationManagerInstance;
+        }
+
+        public UserManager GetUserManager()
+        {
+            if (UserManagerInstance == null) {
+                UserManagerInstance = new UserManager(
+                  Methods.GetUserManager(MethodsPtr),
+                  UserEventsPtr,
+                  ref UserEvents
+                );
+            }
+            return UserManagerInstance;
+        }
+
+        public ImageManager GetImageManager()
+        {
+            if (ImageManagerInstance == null) {
+                ImageManagerInstance = new ImageManager(
+                  Methods.GetImageManager(MethodsPtr),
+                  ImageEventsPtr,
+                  ref ImageEvents
+                );
+            }
+            return ImageManagerInstance;
+        }
+
+        public ActivityManager GetActivityManager()
+        {
+            if (ActivityManagerInstance == null) {
+                ActivityManagerInstance = new ActivityManager(
+                  Methods.GetActivityManager(MethodsPtr),
+                  ActivityEventsPtr,
+                  ref ActivityEvents
+                );
+            }
+            return ActivityManagerInstance;
+        }
+
+        public RelationshipManager GetRelationshipManager()
+        {
+            if (RelationshipManagerInstance == null) {
+                RelationshipManagerInstance = new RelationshipManager(
+                  Methods.GetRelationshipManager(MethodsPtr),
+                  RelationshipEventsPtr,
+                  ref RelationshipEvents
+                );
+            }
+            return RelationshipManagerInstance;
+        }
+
+        public LobbyManager GetLobbyManager()
+        {
+            if (LobbyManagerInstance == null) {
+                LobbyManagerInstance = new LobbyManager(
+                  Methods.GetLobbyManager(MethodsPtr),
+                  LobbyEventsPtr,
+                  ref LobbyEvents
+                );
+            }
+            return LobbyManagerInstance;
+        }
+
+        public NetworkManager GetNetworkManager()
+        {
+            if (NetworkManagerInstance == null) {
+                NetworkManagerInstance = new NetworkManager(
+                  Methods.GetNetworkManager(MethodsPtr),
+                  NetworkEventsPtr,
+                  ref NetworkEvents
+                );
+            }
+            return NetworkManagerInstance;
+        }
+
+        public OverlayManager GetOverlayManager()
+        {
+            if (OverlayManagerInstance == null) {
+                OverlayManagerInstance = new OverlayManager(
+                  Methods.GetOverlayManager(MethodsPtr),
+                  OverlayEventsPtr,
+                  ref OverlayEvents
+                );
+            }
+            return OverlayManagerInstance;
+        }
+
+        public StorageManager GetStorageManager()
+        {
+            if (StorageManagerInstance == null) {
+                StorageManagerInstance = new StorageManager(
+                  Methods.GetStorageManager(MethodsPtr),
+                  StorageEventsPtr,
+                  ref StorageEvents
+                );
+            }
+            return StorageManagerInstance;
+        }
+
+        public StoreManager GetStoreManager()
+        {
+            if (StoreManagerInstance == null) {
+                StoreManagerInstance = new StoreManager(
+                  Methods.GetStoreManager(MethodsPtr),
+                  StoreEventsPtr,
+                  ref StoreEvents
+                );
+            }
+            return StoreManagerInstance;
+        }
+
+        public VoiceManager GetVoiceManager()
+        {
+            if (VoiceManagerInstance == null) {
+                VoiceManagerInstance = new VoiceManager(
+                  Methods.GetVoiceManager(MethodsPtr),
+                  VoiceEventsPtr,
+                  ref VoiceEvents
+                );
+            }
+            return VoiceManagerInstance;
+        }
+
+        public AchievementManager GetAchievementManager()
+        {
+            if (AchievementManagerInstance == null) {
+                AchievementManagerInstance = new AchievementManager(
+                  Methods.GetAchievementManager(MethodsPtr),
+                  AchievementEventsPtr,
+                  ref AchievementEvents
+                );
+            }
+            return AchievementManagerInstance;
+        }
+    }
+
+    public partial class ApplicationManager
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIEvents
+        {
+
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ValidateOrExitCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ValidateOrExitMethod(IntPtr methodsPtr, IntPtr callbackData, ValidateOrExitCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetCurrentLocaleMethod(IntPtr methodsPtr, StringBuilder locale);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetCurrentBranchMethod(IntPtr methodsPtr, StringBuilder branch);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetOAuth2TokenCallback(IntPtr ptr, Result result, ref OAuth2Token oauth2Token);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetOAuth2TokenMethod(IntPtr methodsPtr, IntPtr callbackData, GetOAuth2TokenCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetTicketCallback(IntPtr ptr, Result result, [MarshalAs(UnmanagedType.LPStr)]ref string data);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetTicketMethod(IntPtr methodsPtr, IntPtr callbackData, GetTicketCallback callback);
+
+            internal ValidateOrExitMethod ValidateOrExit;
+
+            internal GetCurrentLocaleMethod GetCurrentLocale;
+
+            internal GetCurrentBranchMethod GetCurrentBranch;
+
+            internal GetOAuth2TokenMethod GetOAuth2Token;
+
+            internal GetTicketMethod GetTicket;
+        }
+
+        public delegate void ValidateOrExitHandler(Result result);
+
+        public delegate void GetOAuth2TokenHandler(Result result, ref OAuth2Token oauth2Token);
+
+        public delegate void GetTicketHandler(Result result, ref string data);
+
+        private IntPtr MethodsPtr;
+
+        private Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        internal ApplicationManager(IntPtr ptr, IntPtr eventsPtr, ref FFIEvents events)
+        {
+            if (eventsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+            InitEvents(eventsPtr, ref events);
+            MethodsPtr = ptr;
+            if (MethodsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+        }
+
+        private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
+        {
+            Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        public void ValidateOrExit(ValidateOrExitHandler callback)
+        {
+            FFIMethods.ValidateOrExitCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.ValidateOrExit(MethodsPtr, Utility.Retain(wrapped), wrapped);
+        }
+
+        public string GetCurrentLocale()
+        {
+            var ret = new StringBuilder(128);
+            Methods.GetCurrentLocale(MethodsPtr, ret);
+            return ret.ToString();
+        }
+
+        public string GetCurrentBranch()
+        {
+            var ret = new StringBuilder(4096);
+            Methods.GetCurrentBranch(MethodsPtr, ret);
+            return ret.ToString();
+        }
+
+        public void GetOAuth2Token(GetOAuth2TokenHandler callback)
+        {
+            FFIMethods.GetOAuth2TokenCallback wrapped = (IntPtr ptr, Result result, ref OAuth2Token oauth2Token) =>
+            {
+                Utility.Release(ptr);
+                callback(result, ref oauth2Token);
+            };
+            Methods.GetOAuth2Token(MethodsPtr, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void GetTicket(GetTicketHandler callback)
+        {
+            FFIMethods.GetTicketCallback wrapped = (IntPtr ptr, Result result, ref string data) =>
+            {
+                Utility.Release(ptr);
+                callback(result, ref data);
+            };
+            Methods.GetTicket(MethodsPtr, Utility.Retain(wrapped), wrapped);
+        }
+    }
+
+    public partial class UserManager
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIEvents
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void CurrentUserUpdateHandler(IntPtr ptr);
+
+            internal CurrentUserUpdateHandler OnCurrentUserUpdate;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetCurrentUserMethod(IntPtr methodsPtr, ref User currentUser);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetUserCallback(IntPtr ptr, Result result, ref User user);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetUserMethod(IntPtr methodsPtr, Int64 userId, IntPtr callbackData, GetUserCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetCurrentUserPremiumTypeMethod(IntPtr methodsPtr, ref PremiumType premiumType);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result CurrentUserHasFlagMethod(IntPtr methodsPtr, UserFlag flag, ref bool hasFlag);
+
+            internal GetCurrentUserMethod GetCurrentUser;
+
+            internal GetUserMethod GetUser;
+
+            internal GetCurrentUserPremiumTypeMethod GetCurrentUserPremiumType;
+
+            internal CurrentUserHasFlagMethod CurrentUserHasFlag;
+        }
+
+        public delegate void GetUserHandler(Result result, ref User user);
+
+        public delegate void CurrentUserUpdateHandler();
+
+        private IntPtr MethodsPtr;
+
+        private Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        public event CurrentUserUpdateHandler OnCurrentUserUpdate;
+
+        internal UserManager(IntPtr ptr, IntPtr eventsPtr, ref FFIEvents events)
+        {
+            if (eventsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+            InitEvents(eventsPtr, ref events);
+            MethodsPtr = ptr;
+            if (MethodsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+        }
+
+        private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
+        {
+            events.OnCurrentUserUpdate = (IntPtr ptr) =>
+            {
+                if (OnCurrentUserUpdate != null)
+                {
+                    OnCurrentUserUpdate.Invoke();
+                }
+            };
+            Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        public User GetCurrentUser()
+        {
+            var ret = new User();
+            var res = Methods.GetCurrentUser(MethodsPtr, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public void GetUser(Int64 userId, GetUserHandler callback)
+        {
+            FFIMethods.GetUserCallback wrapped = (IntPtr ptr, Result result, ref User user) =>
+            {
+                Utility.Release(ptr);
+                callback(result, ref user);
+            };
+            Methods.GetUser(MethodsPtr, userId, Utility.Retain(wrapped), wrapped);
+        }
+
+        public PremiumType GetCurrentUserPremiumType()
+        {
+            var ret = new PremiumType();
+            var res = Methods.GetCurrentUserPremiumType(MethodsPtr, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public bool CurrentUserHasFlag(UserFlag flag)
+        {
+            var ret = new bool();
+            var res = Methods.CurrentUserHasFlag(MethodsPtr, flag, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+    }
+
+    public partial class ImageManager
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIEvents
+        {
+
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void FetchCallback(IntPtr ptr, Result result, ImageHandle handleResult);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void FetchMethod(IntPtr methodsPtr, ImageHandle handle, bool refresh, IntPtr callbackData, FetchCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetDimensionsMethod(IntPtr methodsPtr, ImageHandle handle, ref ImageDimensions dimensions);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetDataMethod(IntPtr methodsPtr, ImageHandle handle, byte[] data, Int32 dataLen);
+
+            internal FetchMethod Fetch;
+
+            internal GetDimensionsMethod GetDimensions;
+
+            internal GetDataMethod GetData;
+        }
+
+        public delegate void FetchHandler(Result result, ImageHandle handleResult);
+
+        private IntPtr MethodsPtr;
+
+        private Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        internal ImageManager(IntPtr ptr, IntPtr eventsPtr, ref FFIEvents events)
+        {
+            if (eventsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+            InitEvents(eventsPtr, ref events);
+            MethodsPtr = ptr;
+            if (MethodsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+        }
+
+        private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
+        {
+            Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        public void Fetch(ImageHandle handle, bool refresh, FetchHandler callback)
+        {
+            FFIMethods.FetchCallback wrapped = (IntPtr ptr, Result result, ImageHandle handleResult) =>
+            {
+                Utility.Release(ptr);
+                callback(result, handleResult);
+            };
+            Methods.Fetch(MethodsPtr, handle, refresh, Utility.Retain(wrapped), wrapped);
+        }
+
+        public ImageDimensions GetDimensions(ImageHandle handle)
+        {
+            var ret = new ImageDimensions();
+            var res = Methods.GetDimensions(MethodsPtr, handle, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public void GetData(ImageHandle handle, byte[] data)
+        {
+            var res = Methods.GetData(MethodsPtr, handle, data, data.Length);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+    }
+
+    public partial class ActivityManager
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIEvents
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ActivityJoinHandler(IntPtr ptr, [MarshalAs(UnmanagedType.LPStr)]string secret);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ActivitySpectateHandler(IntPtr ptr, [MarshalAs(UnmanagedType.LPStr)]string secret);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ActivityJoinRequestHandler(IntPtr ptr, ref User user);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ActivityInviteHandler(IntPtr ptr, ActivityActionType type, ref User user, ref Activity activity);
+
+            internal ActivityJoinHandler OnActivityJoin;
+
+            internal ActivitySpectateHandler OnActivitySpectate;
+
+            internal ActivityJoinRequestHandler OnActivityJoinRequest;
+
+            internal ActivityInviteHandler OnActivityInvite;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result RegisterCommandMethod(IntPtr methodsPtr, [MarshalAs(UnmanagedType.LPStr)]string command);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result RegisterSteamMethod(IntPtr methodsPtr, UInt32 steamId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void UpdateActivityCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void UpdateActivityMethod(IntPtr methodsPtr, ref Activity activity, IntPtr callbackData, UpdateActivityCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ClearActivityCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ClearActivityMethod(IntPtr methodsPtr, IntPtr callbackData, ClearActivityCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SendRequestReplyCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SendRequestReplyMethod(IntPtr methodsPtr, Int64 userId, ActivityJoinRequestReply reply, IntPtr callbackData, SendRequestReplyCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SendInviteCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SendInviteMethod(IntPtr methodsPtr, Int64 userId, ActivityActionType type, [MarshalAs(UnmanagedType.LPStr)]string content, IntPtr callbackData, SendInviteCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void AcceptInviteCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void AcceptInviteMethod(IntPtr methodsPtr, Int64 userId, IntPtr callbackData, AcceptInviteCallback callback);
+
+            internal RegisterCommandMethod RegisterCommand;
+
+            internal RegisterSteamMethod RegisterSteam;
+
+            internal UpdateActivityMethod UpdateActivity;
+
+            internal ClearActivityMethod ClearActivity;
+
+            internal SendRequestReplyMethod SendRequestReply;
+
+            internal SendInviteMethod SendInvite;
+
+            internal AcceptInviteMethod AcceptInvite;
+        }
+
+        public delegate void UpdateActivityHandler(Result result);
+
+        public delegate void ClearActivityHandler(Result result);
+
+        public delegate void SendRequestReplyHandler(Result result);
+
+        public delegate void SendInviteHandler(Result result);
+
+        public delegate void AcceptInviteHandler(Result result);
+
+        public delegate void ActivityJoinHandler(string secret);
+
+        public delegate void ActivitySpectateHandler(string secret);
+
+        public delegate void ActivityJoinRequestHandler(ref User user);
+
+        public delegate void ActivityInviteHandler(ActivityActionType type, ref User user, ref Activity activity);
+
+        private IntPtr MethodsPtr;
+
+        private Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        public event ActivityJoinHandler OnActivityJoin;
+
+        public event ActivitySpectateHandler OnActivitySpectate;
+
+        public event ActivityJoinRequestHandler OnActivityJoinRequest;
+
+        public event ActivityInviteHandler OnActivityInvite;
+
+        internal ActivityManager(IntPtr ptr, IntPtr eventsPtr, ref FFIEvents events)
+        {
+            if (eventsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+            InitEvents(eventsPtr, ref events);
+            MethodsPtr = ptr;
+            if (MethodsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+        }
+
+        private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
+        {
+            events.OnActivityJoin = (IntPtr ptr, string secret) =>
+            {
+                if (OnActivityJoin != null)
+                {
+                    OnActivityJoin.Invoke(secret);
+                }
+            };
+            events.OnActivitySpectate = (IntPtr ptr, string secret) =>
+            {
+                if (OnActivitySpectate != null)
+                {
+                    OnActivitySpectate.Invoke(secret);
+                }
+            };
+            events.OnActivityJoinRequest = (IntPtr ptr, ref User user) =>
+            {
+                if (OnActivityJoinRequest != null)
+                {
+                    OnActivityJoinRequest.Invoke(ref user);
+                }
+            };
+            events.OnActivityInvite = (IntPtr ptr, ActivityActionType type, ref User user, ref Activity activity) =>
+            {
+                if (OnActivityInvite != null)
+                {
+                    OnActivityInvite.Invoke(type, ref user, ref activity);
+                }
+            };
+            Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        public void RegisterCommand(string command)
+        {
+            var res = Methods.RegisterCommand(MethodsPtr, command);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+
+        public void RegisterSteam(UInt32 steamId)
+        {
+            var res = Methods.RegisterSteam(MethodsPtr, steamId);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+
+        public void UpdateActivity(Activity activity, UpdateActivityHandler callback)
+        {
+            FFIMethods.UpdateActivityCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.UpdateActivity(MethodsPtr, ref activity, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void ClearActivity(ClearActivityHandler callback)
+        {
+            FFIMethods.ClearActivityCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.ClearActivity(MethodsPtr, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void SendRequestReply(Int64 userId, ActivityJoinRequestReply reply, SendRequestReplyHandler callback)
+        {
+            FFIMethods.SendRequestReplyCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.SendRequestReply(MethodsPtr, userId, reply, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void SendInvite(Int64 userId, ActivityActionType type, string content, SendInviteHandler callback)
+        {
+            FFIMethods.SendInviteCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.SendInvite(MethodsPtr, userId, type, content, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void AcceptInvite(Int64 userId, AcceptInviteHandler callback)
+        {
+            FFIMethods.AcceptInviteCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.AcceptInvite(MethodsPtr, userId, Utility.Retain(wrapped), wrapped);
+        }
+    }
+
+    public partial class RelationshipManager
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIEvents
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void RefreshHandler(IntPtr ptr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void RelationshipUpdateHandler(IntPtr ptr, ref Relationship relationship);
+
+            internal RefreshHandler OnRefresh;
+
+            internal RelationshipUpdateHandler OnRelationshipUpdate;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate bool FilterCallback(IntPtr ptr, ref Relationship relationship);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void FilterMethod(IntPtr methodsPtr, IntPtr callbackData, FilterCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result CountMethod(IntPtr methodsPtr, ref Int32 count);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetMethod(IntPtr methodsPtr, Int64 userId, ref Relationship relationship);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetAtMethod(IntPtr methodsPtr, UInt32 index, ref Relationship relationship);
+
+            internal FilterMethod Filter;
+
+            internal CountMethod Count;
+
+            internal GetMethod Get;
+
+            internal GetAtMethod GetAt;
+        }
+
+        public delegate bool FilterHandler(ref Relationship relationship);
+
+        public delegate void RefreshHandler();
+
+        public delegate void RelationshipUpdateHandler(ref Relationship relationship);
+
+        private IntPtr MethodsPtr;
+
+        private Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        public event RefreshHandler OnRefresh;
+
+        public event RelationshipUpdateHandler OnRelationshipUpdate;
+
+        internal RelationshipManager(IntPtr ptr, IntPtr eventsPtr, ref FFIEvents events)
+        {
+            if (eventsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+            InitEvents(eventsPtr, ref events);
+            MethodsPtr = ptr;
+            if (MethodsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+        }
+
+        private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
+        {
+            events.OnRefresh = (IntPtr ptr) =>
+            {
+                if (OnRefresh != null)
+                {
+                    OnRefresh.Invoke();
+                }
+            };
+            events.OnRelationshipUpdate = (IntPtr ptr, ref Relationship relationship) =>
+            {
+                if (OnRelationshipUpdate != null)
+                {
+                    OnRelationshipUpdate.Invoke(ref relationship);
+                }
+            };
+            Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        public void Filter(FilterHandler callback)
+        {
+            FFIMethods.FilterCallback wrapped = (IntPtr ptr, ref Relationship relationship) =>
+            {
+                return callback(ref relationship);
+            };
+            Methods.Filter(MethodsPtr, IntPtr.Zero, wrapped);
+        }
+
+        public Int32 Count()
+        {
+            var ret = new Int32();
+            var res = Methods.Count(MethodsPtr, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public Relationship Get(Int64 userId)
+        {
+            var ret = new Relationship();
+            var res = Methods.Get(MethodsPtr, userId, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public Relationship GetAt(UInt32 index)
+        {
+            var ret = new Relationship();
+            var res = Methods.GetAt(MethodsPtr, index, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+    }
+
+    public partial class LobbyManager
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIEvents
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void LobbyUpdateHandler(IntPtr ptr, Int64 lobbyId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void LobbyDeleteHandler(IntPtr ptr, Int64 lobbyId, UInt32 reason);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void MemberConnectHandler(IntPtr ptr, Int64 lobbyId, Int64 userId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void MemberUpdateHandler(IntPtr ptr, Int64 lobbyId, Int64 userId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void MemberDisconnectHandler(IntPtr ptr, Int64 lobbyId, Int64 userId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void LobbyMessageHandler(IntPtr ptr, Int64 lobbyId, Int64 userId, IntPtr dataPtr, Int32 dataLen);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SpeakingHandler(IntPtr ptr, Int64 lobbyId, Int64 userId, bool speaking);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void NetworkMessageHandler(IntPtr ptr, Int64 lobbyId, Int64 userId, byte channelId, IntPtr dataPtr, Int32 dataLen);
+
+            internal LobbyUpdateHandler OnLobbyUpdate;
+
+            internal LobbyDeleteHandler OnLobbyDelete;
+
+            internal MemberConnectHandler OnMemberConnect;
+
+            internal MemberUpdateHandler OnMemberUpdate;
+
+            internal MemberDisconnectHandler OnMemberDisconnect;
+
+            internal LobbyMessageHandler OnLobbyMessage;
+
+            internal SpeakingHandler OnSpeaking;
+
+            internal NetworkMessageHandler OnNetworkMessage;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetLobbyCreateTransactionMethod(IntPtr methodsPtr, ref IntPtr transaction);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetLobbyUpdateTransactionMethod(IntPtr methodsPtr, Int64 lobbyId, ref IntPtr transaction);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetMemberUpdateTransactionMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, ref IntPtr transaction);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void CreateLobbyCallback(IntPtr ptr, Result result, ref Lobby lobby);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void CreateLobbyMethod(IntPtr methodsPtr, IntPtr transaction, IntPtr callbackData, CreateLobbyCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void UpdateLobbyCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void UpdateLobbyMethod(IntPtr methodsPtr, Int64 lobbyId, IntPtr transaction, IntPtr callbackData, UpdateLobbyCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void DeleteLobbyCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void DeleteLobbyMethod(IntPtr methodsPtr, Int64 lobbyId, IntPtr callbackData, DeleteLobbyCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ConnectLobbyCallback(IntPtr ptr, Result result, ref Lobby lobby);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ConnectLobbyMethod(IntPtr methodsPtr, Int64 lobbyId, [MarshalAs(UnmanagedType.LPStr)]string secret, IntPtr callbackData, ConnectLobbyCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ConnectLobbyWithActivitySecretCallback(IntPtr ptr, Result result, ref Lobby lobby);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ConnectLobbyWithActivitySecretMethod(IntPtr methodsPtr, [MarshalAs(UnmanagedType.LPStr)]string activitySecret, IntPtr callbackData, ConnectLobbyWithActivitySecretCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void DisconnectLobbyCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void DisconnectLobbyMethod(IntPtr methodsPtr, Int64 lobbyId, IntPtr callbackData, DisconnectLobbyCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetLobbyMethod(IntPtr methodsPtr, Int64 lobbyId, ref Lobby lobby);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetLobbyActivitySecretMethod(IntPtr methodsPtr, Int64 lobbyId, StringBuilder secret);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetLobbyMetadataValueMethod(IntPtr methodsPtr, Int64 lobbyId, [MarshalAs(UnmanagedType.LPStr)]string key, StringBuilder value);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetLobbyMetadataKeyMethod(IntPtr methodsPtr, Int64 lobbyId, Int32 index, StringBuilder key);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result LobbyMetadataCountMethod(IntPtr methodsPtr, Int64 lobbyId, ref Int32 count);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result MemberCountMethod(IntPtr methodsPtr, Int64 lobbyId, ref Int32 count);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetMemberUserIdMethod(IntPtr methodsPtr, Int64 lobbyId, Int32 index, ref Int64 userId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetMemberUserMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, ref User user);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetMemberMetadataValueMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, [MarshalAs(UnmanagedType.LPStr)]string key, StringBuilder value);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetMemberMetadataKeyMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, Int32 index, StringBuilder key);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result MemberMetadataCountMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, ref Int32 count);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void UpdateMemberCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void UpdateMemberMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, IntPtr transaction, IntPtr callbackData, UpdateMemberCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SendLobbyMessageCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SendLobbyMessageMethod(IntPtr methodsPtr, Int64 lobbyId, byte[] data, Int32 dataLen, IntPtr callbackData, SendLobbyMessageCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetSearchQueryMethod(IntPtr methodsPtr, ref IntPtr query);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SearchCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void SearchMethod(IntPtr methodsPtr, IntPtr query, IntPtr callbackData, SearchCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void LobbyCountMethod(IntPtr methodsPtr, ref Int32 count);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result GetLobbyIdMethod(IntPtr methodsPtr, Int32 index, ref Int64 lobbyId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ConnectVoiceCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void ConnectVoiceMethod(IntPtr methodsPtr, Int64 lobbyId, IntPtr callbackData, ConnectVoiceCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void DisconnectVoiceCallback(IntPtr ptr, Result result);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void DisconnectVoiceMethod(IntPtr methodsPtr, Int64 lobbyId, IntPtr callbackData, DisconnectVoiceCallback callback);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result ConnectNetworkMethod(IntPtr methodsPtr, Int64 lobbyId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result DisconnectNetworkMethod(IntPtr methodsPtr, Int64 lobbyId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result FlushNetworkMethod(IntPtr methodsPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result OpenNetworkChannelMethod(IntPtr methodsPtr, Int64 lobbyId, byte channelId, bool reliable);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SendNetworkMessageMethod(IntPtr methodsPtr, Int64 lobbyId, Int64 userId, byte channelId, byte[] data, Int32 dataLen);
+
+            internal GetLobbyCreateTransactionMethod GetLobbyCreateTransaction;
+
+            internal GetLobbyUpdateTransactionMethod GetLobbyUpdateTransaction;
+
+            internal GetMemberUpdateTransactionMethod GetMemberUpdateTransaction;
+
+            internal CreateLobbyMethod CreateLobby;
+
+            internal UpdateLobbyMethod UpdateLobby;
+
+            internal DeleteLobbyMethod DeleteLobby;
+
+            internal ConnectLobbyMethod ConnectLobby;
+
+            internal ConnectLobbyWithActivitySecretMethod ConnectLobbyWithActivitySecret;
+
+            internal DisconnectLobbyMethod DisconnectLobby;
+
+            internal GetLobbyMethod GetLobby;
+
+            internal GetLobbyActivitySecretMethod GetLobbyActivitySecret;
+
+            internal GetLobbyMetadataValueMethod GetLobbyMetadataValue;
+
+            internal GetLobbyMetadataKeyMethod GetLobbyMetadataKey;
+
+            internal LobbyMetadataCountMethod LobbyMetadataCount;
+
+            internal MemberCountMethod MemberCount;
+
+            internal GetMemberUserIdMethod GetMemberUserId;
+
+            internal GetMemberUserMethod GetMemberUser;
+
+            internal GetMemberMetadataValueMethod GetMemberMetadataValue;
+
+            internal GetMemberMetadataKeyMethod GetMemberMetadataKey;
+
+            internal MemberMetadataCountMethod MemberMetadataCount;
+
+            internal UpdateMemberMethod UpdateMember;
+
+            internal SendLobbyMessageMethod SendLobbyMessage;
+
+            internal GetSearchQueryMethod GetSearchQuery;
+
+            internal SearchMethod Search;
+
+            internal LobbyCountMethod LobbyCount;
+
+            internal GetLobbyIdMethod GetLobbyId;
+
+            internal ConnectVoiceMethod ConnectVoice;
+
+            internal DisconnectVoiceMethod DisconnectVoice;
+
+            internal ConnectNetworkMethod ConnectNetwork;
+
+            internal DisconnectNetworkMethod DisconnectNetwork;
+
+            internal FlushNetworkMethod FlushNetwork;
+
+            internal OpenNetworkChannelMethod OpenNetworkChannel;
+
+            internal SendNetworkMessageMethod SendNetworkMessage;
+        }
+
+        public delegate void CreateLobbyHandler(Result result, ref Lobby lobby);
+
+        public delegate void UpdateLobbyHandler(Result result);
+
+        public delegate void DeleteLobbyHandler(Result result);
+
+        public delegate void ConnectLobbyHandler(Result result, ref Lobby lobby);
+
+        public delegate void ConnectLobbyWithActivitySecretHandler(Result result, ref Lobby lobby);
+
+        public delegate void DisconnectLobbyHandler(Result result);
+
+        public delegate void UpdateMemberHandler(Result result);
+
+        public delegate void SendLobbyMessageHandler(Result result);
+
+        public delegate void SearchHandler(Result result);
+
+        public delegate void ConnectVoiceHandler(Result result);
+
+        public delegate void DisconnectVoiceHandler(Result result);
+
+        public delegate void LobbyUpdateHandler(Int64 lobbyId);
+
+        public delegate void LobbyDeleteHandler(Int64 lobbyId, UInt32 reason);
+
+        public delegate void MemberConnectHandler(Int64 lobbyId, Int64 userId);
+
+        public delegate void MemberUpdateHandler(Int64 lobbyId, Int64 userId);
+
+        public delegate void MemberDisconnectHandler(Int64 lobbyId, Int64 userId);
+
+        public delegate void LobbyMessageHandler(Int64 lobbyId, Int64 userId, byte[] data);
+
+        public delegate void SpeakingHandler(Int64 lobbyId, Int64 userId, bool speaking);
+
+        public delegate void NetworkMessageHandler(Int64 lobbyId, Int64 userId, byte channelId, byte[] data);
+
+        private IntPtr MethodsPtr;
+
+        private Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        public event LobbyUpdateHandler OnLobbyUpdate;
+
+        public event LobbyDeleteHandler OnLobbyDelete;
+
+        public event MemberConnectHandler OnMemberConnect;
+
+        public event MemberUpdateHandler OnMemberUpdate;
+
+        public event MemberDisconnectHandler OnMemberDisconnect;
+
+        public event LobbyMessageHandler OnLobbyMessage;
+
+        public event SpeakingHandler OnSpeaking;
+
+        public event NetworkMessageHandler OnNetworkMessage;
+
+        internal LobbyManager(IntPtr ptr, IntPtr eventsPtr, ref FFIEvents events)
+        {
+            if (eventsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+            InitEvents(eventsPtr, ref events);
+            MethodsPtr = ptr;
+            if (MethodsPtr == IntPtr.Zero) {
+                throw new ResultException(Result.InternalError);
+            }
+        }
+
+        private void InitEvents(IntPtr eventsPtr, ref FFIEvents events)
+        {
+            events.OnLobbyUpdate = (IntPtr ptr, Int64 lobbyId) =>
+            {
+                if (OnLobbyUpdate != null)
+                {
+                    OnLobbyUpdate.Invoke(lobbyId);
+                }
+            };
+            events.OnLobbyDelete = (IntPtr ptr, Int64 lobbyId, UInt32 reason) =>
+            {
+                if (OnLobbyDelete != null)
+                {
+                    OnLobbyDelete.Invoke(lobbyId, reason);
+                }
+            };
+            events.OnMemberConnect = (IntPtr ptr, Int64 lobbyId, Int64 userId) =>
+            {
+                if (OnMemberConnect != null)
+                {
+                    OnMemberConnect.Invoke(lobbyId, userId);
+                }
+            };
+            events.OnMemberUpdate = (IntPtr ptr, Int64 lobbyId, Int64 userId) =>
+            {
+                if (OnMemberUpdate != null)
+                {
+                    OnMemberUpdate.Invoke(lobbyId, userId);
+                }
+            };
+            events.OnMemberDisconnect = (IntPtr ptr, Int64 lobbyId, Int64 userId) =>
+            {
+                if (OnMemberDisconnect != null)
+                {
+                    OnMemberDisconnect.Invoke(lobbyId, userId);
+                }
+            };
+            events.OnLobbyMessage = (IntPtr ptr, Int64 lobbyId, Int64 userId, IntPtr dataPtr, Int32 dataLen) =>
+            {
+                if (OnLobbyMessage != null)
+                {
+                    byte[] data = new byte[dataLen];
+                    Marshal.Copy(dataPtr, data, 0, (int)dataLen);
+                    OnLobbyMessage.Invoke(lobbyId, userId, data);
+                }
+            };
+            events.OnSpeaking = (IntPtr ptr, Int64 lobbyId, Int64 userId, bool speaking) =>
+            {
+                if (OnSpeaking != null)
+                {
+                    OnSpeaking.Invoke(lobbyId, userId, speaking);
+                }
+            };
+            events.OnNetworkMessage = (IntPtr ptr, Int64 lobbyId, Int64 userId, byte channelId, IntPtr dataPtr, Int32 dataLen) =>
+            {
+                if (OnNetworkMessage != null)
+                {
+                    byte[] data = new byte[dataLen];
+                    Marshal.Copy(dataPtr, data, 0, (int)dataLen);
+                    OnNetworkMessage.Invoke(lobbyId, userId, channelId, data);
+                }
+            };
+            Marshal.StructureToPtr(events, eventsPtr, false);
+        }
+
+        public LobbyTransaction GetLobbyCreateTransaction()
+        {
+            var ret = new LobbyTransaction();
+            var res = Methods.GetLobbyCreateTransaction(MethodsPtr, ref ret.MethodsPtr);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public LobbyTransaction GetLobbyUpdateTransaction(Int64 lobbyId)
+        {
+            var ret = new LobbyTransaction();
+            var res = Methods.GetLobbyUpdateTransaction(MethodsPtr, lobbyId, ref ret.MethodsPtr);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public LobbyMemberTransaction GetMemberUpdateTransaction(Int64 lobbyId, Int64 userId)
+        {
+            var ret = new LobbyMemberTransaction();
+            var res = Methods.GetMemberUpdateTransaction(MethodsPtr, lobbyId, userId, ref ret.MethodsPtr);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public void CreateLobby(LobbyTransaction transaction, CreateLobbyHandler callback)
+        {
+            FFIMethods.CreateLobbyCallback wrapped = (IntPtr ptr, Result result, ref Lobby lobby) =>
+            {
+                Utility.Release(ptr);
+                callback(result, ref lobby);
+            };
+            Methods.CreateLobby(MethodsPtr, transaction.MethodsPtr, Utility.Retain(wrapped), wrapped);
+            transaction.MethodsPtr = IntPtr.Zero;
+        }
+
+        public void UpdateLobby(Int64 lobbyId, LobbyTransaction transaction, UpdateLobbyHandler callback)
+        {
+            FFIMethods.UpdateLobbyCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.UpdateLobby(MethodsPtr, lobbyId, transaction.MethodsPtr, Utility.Retain(wrapped), wrapped);
+            transaction.MethodsPtr = IntPtr.Zero;
+        }
+
+        public void DeleteLobby(Int64 lobbyId, DeleteLobbyHandler callback)
+        {
+            FFIMethods.DeleteLobbyCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.DeleteLobby(MethodsPtr, lobbyId, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void ConnectLobby(Int64 lobbyId, string secret, ConnectLobbyHandler callback)
+        {
+            FFIMethods.ConnectLobbyCallback wrapped = (IntPtr ptr, Result result, ref Lobby lobby) =>
+            {
+                Utility.Release(ptr);
+                callback(result, ref lobby);
+            };
+            Methods.ConnectLobby(MethodsPtr, lobbyId, secret, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void ConnectLobbyWithActivitySecret(string activitySecret, ConnectLobbyWithActivitySecretHandler callback)
+        {
+            FFIMethods.ConnectLobbyWithActivitySecretCallback wrapped = (IntPtr ptr, Result result, ref Lobby lobby) =>
+            {
+                Utility.Release(ptr);
+                callback(result, ref lobby);
+            };
+            Methods.ConnectLobbyWithActivitySecret(MethodsPtr, activitySecret, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void DisconnectLobby(Int64 lobbyId, DisconnectLobbyHandler callback)
+        {
+            FFIMethods.DisconnectLobbyCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.DisconnectLobby(MethodsPtr, lobbyId, Utility.Retain(wrapped), wrapped);
+        }
+
+        public Lobby GetLobby(Int64 lobbyId)
+        {
+            var ret = new Lobby();
+            var res = Methods.GetLobby(MethodsPtr, lobbyId, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public string GetLobbyActivitySecret(Int64 lobbyId)
+        {
+            var ret = new StringBuilder(128);
+            var res = Methods.GetLobbyActivitySecret(MethodsPtr, lobbyId, ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret.ToString();
+        }
+
+        public string GetLobbyMetadataValue(Int64 lobbyId, string key)
+        {
+            var ret = new StringBuilder(4096);
+            var res = Methods.GetLobbyMetadataValue(MethodsPtr, lobbyId, key, ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret.ToString();
+        }
+
+        public string GetLobbyMetadataKey(Int64 lobbyId, Int32 index)
+        {
+            var ret = new StringBuilder(256);
+            var res = Methods.GetLobbyMetadataKey(MethodsPtr, lobbyId, index, ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret.ToString();
+        }
+
+        public Int32 LobbyMetadataCount(Int64 lobbyId)
+        {
+            var ret = new Int32();
+            var res = Methods.LobbyMetadataCount(MethodsPtr, lobbyId, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public Int32 MemberCount(Int64 lobbyId)
+        {
+            var ret = new Int32();
+            var res = Methods.MemberCount(MethodsPtr, lobbyId, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public Int64 GetMemberUserId(Int64 lobbyId, Int32 index)
+        {
+            var ret = new Int64();
+            var res = Methods.GetMemberUserId(MethodsPtr, lobbyId, index, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public User GetMemberUser(Int64 lobbyId, Int64 userId)
+        {
+            var ret = new User();
+            var res = Methods.GetMemberUser(MethodsPtr, lobbyId, userId, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public string GetMemberMetadataValue(Int64 lobbyId, Int64 userId, string key)
+        {
+            var ret = new StringBuilder(4096);
+            var res = Methods.GetMemberMetadataValue(MethodsPtr, lobbyId, userId, key, ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret.ToString();
+        }
+
+        public string GetMemberMetadataKey(Int64 lobbyId, Int64 userId, Int32 index)
+        {
+            var ret = new StringBuilder(256);
+            var res = Methods.GetMemberMetadataKey(MethodsPtr, lobbyId, userId, index, ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret.ToString();
+        }
+
+        public Int32 MemberMetadataCount(Int64 lobbyId, Int64 userId)
+        {
+            var ret = new Int32();
+            var res = Methods.MemberMetadataCount(MethodsPtr, lobbyId, userId, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public void UpdateMember(Int64 lobbyId, Int64 userId, LobbyMemberTransaction transaction, UpdateMemberHandler callback)
+        {
+            FFIMethods.UpdateMemberCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.UpdateMember(MethodsPtr, lobbyId, userId, transaction.MethodsPtr, Utility.Retain(wrapped), wrapped);
+            transaction.MethodsPtr = IntPtr.Zero;
+        }
+
+        public void SendLobbyMessage(Int64 lobbyId, byte[] data, SendLobbyMessageHandler callback)
+        {
+            FFIMethods.SendLobbyMessageCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.SendLobbyMessage(MethodsPtr, lobbyId, data, data.Length, Utility.Retain(wrapped), wrapped);
+        }
+
+        public LobbySearchQuery GetSearchQuery()
+        {
+            var ret = new LobbySearchQuery();
+            var res = Methods.GetSearchQuery(MethodsPtr, ref ret.MethodsPtr);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public void Search(LobbySearchQuery query, SearchHandler callback)
+        {
+            FFIMethods.SearchCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.Search(MethodsPtr, query.MethodsPtr, Utility.Retain(wrapped), wrapped);
+            query.MethodsPtr = IntPtr.Zero;
+        }
+
+        public Int32 LobbyCount()
+        {
+            var ret = new Int32();
+            Methods.LobbyCount(MethodsPtr, ref ret);
+            return ret;
+        }
+
+        public Int64 GetLobbyId(Int32 index)
+        {
+            var ret = new Int64();
+            var res = Methods.GetLobbyId(MethodsPtr, index, ref ret);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+            return ret;
+        }
+
+        public void ConnectVoice(Int64 lobbyId, ConnectVoiceHandler callback)
+        {
+            FFIMethods.ConnectVoiceCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.ConnectVoice(MethodsPtr, lobbyId, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void DisconnectVoice(Int64 lobbyId, DisconnectVoiceHandler callback)
+        {
+            FFIMethods.DisconnectVoiceCallback wrapped = (IntPtr ptr, Result result) =>
+            {
+                Utility.Release(ptr);
+                callback(result);
+            };
+            Methods.DisconnectVoice(MethodsPtr, lobbyId, Utility.Retain(wrapped), wrapped);
+        }
+
+        public void ConnectNetwork(Int64 lobbyId)
+        {
+            var res = Methods.ConnectNetwork(MethodsPtr, lobbyId);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+
+        public void DisconnectNetwork(Int64 lobbyId)
+        {
+            var res = Methods.DisconnectNetwork(MethodsPtr, lobbyId);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+
+        public void FlushNetwork()
+        {
+            var res = Methods.FlushNetwork(MethodsPtr);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+
+        public void OpenNetworkChannel(Int64 lobbyId, byte channelId, bool reliable)
+        {
+            var res = Methods.OpenNetworkChannel(MethodsPtr, lobbyId, channelId, reliable);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+
+        public void SendNetworkMessage(Int64 lobbyId, Int64 userId, byte channelId, byte[] data)
+        {
+            var res = Methods.SendNetworkMessage(MethodsPtr, lobbyId, userId, channelId, data, data.Length);
+            if (res != Result.Ok)
+            {
+                throw new ResultException(res);
+            }
+        }
+    }
+
+    public partial class NetworkManager
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIEvents
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void MessageHandler(IntPtr ptr, UInt64 peerId, byte channelId, IntPtr dataPtr, Int32 dataLen);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void RouteUpdateHandler(IntPtr ptr, [MarshalAs(UnmanagedType.LPStr)]string routeData);
+
+            internal MessageHandler OnMessage;
+
+            internal RouteUpdateHandler OnRouteUpdate;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal partial struct FFIMethods
+        {
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate void GetPeerIdMethod(IntPtr methodsPtr, ref UInt64 peerId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result FlushMethod(IntPtr methodsPtr);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result OpenPeerMethod(IntPtr methodsPtr, UInt64 peerId, [MarshalAs(UnmanagedType.LPStr)]string routeData);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result UpdatePeerMethod(IntPtr methodsPtr, UInt64 peerId, [MarshalAs(UnmanagedType.LPStr)]string routeData);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result ClosePeerMethod(IntPtr methodsPtr, UInt64 peerId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result OpenChannelMethod(IntPtr methodsPtr, UInt64 peerId, byte channelId, bool reliable);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result CloseChannelMethod(IntPtr methodsPtr, UInt64 peerId, byte channelId);
+
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate Result SendMessageMethod(IntPtr methodsPtr, UInt64 peerId, byte channelId, byte[] data, Int32 dataLen);
+
+            internal GetPeerIdMethod GetPeerId;
+
+            internal FlushMethod Flush;
+
+            internal OpenPeerMethod OpenPeer;
+
+            internal UpdatePeerMethod UpdatePeer;
+
+            internal ClosePeerMethod ClosePeer;
+
+            internal OpenChannelMethod OpenChannel;
+
+            internal CloseChannelMethod CloseChannel;
+
+            internal SendMessageMethod SendMessage;
+        }
+
+        public delegate void MessageHandler(UInt64 peerId, byte channelId, byte[] data);
+
+        public delegate void RouteUpdateHandler(string routeData);
+
+        private IntPtr MethodsPtr;
+
+        private Object MethodsStructure;
+
+        private FFIMethods Methods
+        {
+            get
+            {
+                if (MethodsStructure == null)
+                {
+                    MethodsStructure = Marshal.PtrToStructure(MethodsPtr, typeof(FFIMethods));
+                }
+                return (FFIMethods)MethodsStructure;
+            }
+
+        }
+
+        public event MessageHandler OnMessage;
+
+        public event RouteUpdateHandler OnRouteUpdate;
+
+        internal NetworkManager(IntPtr ptr, IntPtr eventsPtr, ref FFIEvents events)
+        {
+            if (eventsPtr == IntPtr.Zero) {
+                throw new ResultException(Result
