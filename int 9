@@ -1,0 +1,7 @@
+@base_command.group()
+async def group(ctx: interactions.CommandContext, base_res: interactions.BaseResult):
+    pass
+
+@group.subcommand()
+async def subcommand_group(ctx: interactions.CommandContext, group_res: interactions.GroupResult):
+    pass

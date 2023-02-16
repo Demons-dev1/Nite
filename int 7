@@ -1,0 +1,20 @@
+import interactions
+
+bot = interactions.Client(token="your_secret_bot_token")
+
+@bot.command(scope=guild_id)
+async def base_command(ctx: interactions.CommandContext):
+    """This description isn't seen in UI (yet?)"""
+    pass
+
+@base_command.subcommand()
+@interactions.option(description="A descriptive description")
+async def command_name(ctx: interactions.CommandContext, option: int = None):
+    """A descriptive description"""
+    await ctx.send(f"You selected the command_name sub command and put in {option}")
+
+@base_command.subcommand()
+@interactions.option(description="A descriptive description")
+async def second_command(ctx: interactions.CommandContext, second_option: str):
+    """A descriptive description"""
+    await ctx.send(f"You selected the second_command sub command and put in {second_option}")

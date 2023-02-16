@@ -1,0 +1,21 @@
+import interactions
+
+bot = interactions.Client(token="your_secret_bot_token")
+
+@bot.command(
+    name="say_something",
+    description="say something!",
+    scope=the_id_of_your_guild,
+    options = [
+        interactions.Option(
+            name="text",
+            description="What you want to say",
+            type=interactions.OptionType.STRING,
+            required=True,
+        ),
+    ],
+)
+async def my_first_command(ctx: interactions.CommandContext, text: str):
+    await ctx.send(f"You said '{text}'!")
+
+bot.start()

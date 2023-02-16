@@ -1,0 +1,9 @@
+import interactions
+
+bot = interactions.Client(token="your_secret_bot_token")
+
+@bot.command(scope=the_id_of_your_guild)
+@interactions.option()
+async def say_something(ctx: interactions.CommandContext, text: str):
+    """say something!"""
+    await ctx.send(f"You said '{text}'!")
